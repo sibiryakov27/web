@@ -24,8 +24,10 @@ public class WebTest {
     public void shouldValidateEmptyNameField() {
         open("http://localhost:9999");
         SelenideElement form = $(".form");
+        form.$("[data-test-id=phone] input").setValue("+71234567890");
+        form.$("[data-test-id=agreement]").click();
         form.$(".button").click();
-        form.$(".input_invalid").$(".input__sub")
+        form.$("[data-test-id='name'].input_invalid .input__sub")
                 .shouldHave(Condition.exactText("Поле обязательно для заполнения"));
     }
 
@@ -34,8 +36,10 @@ public class WebTest {
         open("http://localhost:9999");
         SelenideElement form = $(".form");
         form.$("[data-test-id=name] input").setValue("Ivanov Ivan");
+        form.$("[data-test-id=phone] input").setValue("+71234567890");
+        form.$("[data-test-id=agreement]").click();
         form.$(".button").click();
-        form.$(".input_invalid").$(".input__sub")
+        form.$("[data-test-id='name'].input_invalid .input__sub")
                 .shouldHave(Condition.exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
     }
 
@@ -44,8 +48,9 @@ public class WebTest {
         open("http://localhost:9999");
         SelenideElement form = $(".form");
         form.$("[data-test-id=name] input").setValue("Иванов Иван");
+        form.$("[data-test-id=agreement]").click();
         form.$(".button").click();
-        form.$(".input_invalid").$(".input__sub")
+        form.$("[data-test-id='phone'].input_invalid .input__sub")
                 .shouldHave(Condition.exactText("Поле обязательно для заполнения"));
     }
 
@@ -55,8 +60,9 @@ public class WebTest {
         SelenideElement form = $(".form");
         form.$("[data-test-id=name] input").setValue("Иванов Иван");
         form.$("[data-test-id=phone] input").setValue("+7123");
+        form.$("[data-test-id=agreement]").click();
         form.$(".button").click();
-        form.$(".input_invalid").$(".input__sub")
+        form.$("[data-test-id='phone'].input_invalid .input__sub")
                 .shouldHave(Condition.exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
     }
 
